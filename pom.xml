@@ -7,9 +7,11 @@
 	<packaging>jar</packaging>
 	<name>Basic Maven Learning Application</name>
 	<description>Basic Maven Learning Application</description>
-	
+
 	<properties>
 		<site.configuration.port>9000</site.configuration.port>
+		<compiler.source.version>1.8</compiler.source.version>
+		<compiler.target.version>1.8</compiler.target.version>
 	</properties>
 
 	<profiles>
@@ -18,64 +20,68 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-			<dependencies>
-				<dependency>
-					<groupId>junit</groupId>
-					<artifactId>junit</artifactId>
-					<version>4.12</version>
-				</dependency>
-			</dependencies>
-
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>junit</groupId>
+						<artifactId>junit</artifactId>
+						<version>4.12</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
 			<build>
 				<defaultGoal>install</defaultGoal>
 				<finalName>maven-learning</finalName>
-				<plugins>
-					<plugin>
-						<artifactId>maven-clean-plugin</artifactId>
-						<version>3.1.0</version>
-						<executions>
-							<execution>
-								<id>auto-clean</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>clean</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<version>3.6.1</version>
-						<configuration>
-							<source>1.7</source>
-							<target>1.7</target>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-site-plugin</artifactId>
-						<version>3.8.2</version>
-						<executions>
-							<execution>
-								<id>site</id>
-								<phase>install</phase>
-								<goals>
-									<goal>site</goal>
-									<goal>run</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<port>${site.configuration.port}</port>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.22.0</version>						
-					</plugin>
-				</plugins>
+				<!-- To define the plugin version in your parent POM -->
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-compiler-plugin</artifactId>
+							<version>3.6.1</version>
+							<configuration>
+								<source>${compiler.source.version}</source>
+								<target>${compiler.target.version}</target>
+							</configuration>
+						</plugin>						
+						<plugin>
+							<artifactId>maven-clean-plugin</artifactId>
+							<version>3.1.0</version>
+							<executions>
+								<execution>
+									<id>auto-clean</id>
+									<phase>initialize</phase>
+									<goals>
+										<goal>clean</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>						
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-site-plugin</artifactId>
+							<version>3.8.2</version>
+							<executions>
+								<execution>
+									<id>site</id>
+									<phase>install</phase>
+									<goals>
+										<goal>site</goal>
+										<goal>run</goal>
+									</goals>
+								</execution>
+							</executions>
+							<configuration>
+								<port>${site.configuration.port}</port>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-plugin</artifactId>
+							<version>2.22.0</version>
+						</plugin>
+					</plugins>
+				</pluginManagement>
 			</build>
 		</profile>
 	</profiles>
