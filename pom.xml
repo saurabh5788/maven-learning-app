@@ -7,6 +7,10 @@
 	<packaging>jar</packaging>
 	<name>Basic Maven Learning Application</name>
 	<description>Basic Maven Learning Application</description>
+	
+	<properties>
+		<site.configuration.port>9000</site.configuration.port>
+	</properties>
 
 	<profiles>
 		<profile>
@@ -63,7 +67,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<port>9000</port>
+							<port>${site.configuration.port}</port>
 						</configuration>
 					</plugin>
 					<plugin>
